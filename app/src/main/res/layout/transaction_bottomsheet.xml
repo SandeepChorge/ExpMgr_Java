@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:paddingBottom="20dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/heading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_transaction"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_margin="@dimen/_10sdp"
+            />
+
+        <!--android:layout_marginTop="4dp"-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_margin="@dimen/_10sdp"
+            android:id="@+id/amountLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_detail"
+            app:layout_constraintTop_toBottomOf="@+id/amountLayout"
+            tools:layout_editor_absoluteX="10dp"
+
+            android:id="@+id/addDetailTV"
+            />
+
+        <!--style="@style/Theme.Suggestions/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_margin="@dimen/_10sdp"
+
+            app:layout_constraintTop_toBottomOf="@+id/addDetailTV"
+            android:id="@+id/detailLayout"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+            >
+
+        </com.google.android.material.switchmaterial.SwitchMaterial>
+
+
+
+
+
+        <!--<com.google.android.material.chip.Chip
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="asd"/>
+-->
+        <!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@+id/addDetailTV"
+            android:id="@+id/tagInputLayout"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tag_suggestion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/submit_draw"
+                android:id="@+id/searchEd"
+                android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_marginTop="@dimen/_80sdp"
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+            app:icon="@drawable/ic_baseline_check"
+            />
+    </LinearLayout>
+</layout>

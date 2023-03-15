@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ExpenseMgr</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amount">Amount</string>
+    <string name="add_detail">Add Detail</string>
+    <string name="detail">Detail</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="tag_suggestion">Search/ Add Tag</string>
+</resources>

@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdk 32
+    buildToolsVersion "30.0.3"
+    defaultConfig {
+        applicationId "com.madtitan94.suggestions"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        dataBinding true
+        /* viewBinding true*/
+    }
+}
+
+dependencies {
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+  //  annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    implementation 'com.google.code.gson:gson:2.8.6'
+    //implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    //implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+
+    /*Rx-Java*/
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    /*----Dimension ----*/
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    // optional - Test helpers
+    //noinspection GradleDependency
+    testImplementation "androidx.room:room-testing:$room_version"
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+}
