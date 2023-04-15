@@ -11,6 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
+import com.madtitan94.suggestions.db.converters.IntArrTypeConverters;
 import com.madtitan94.suggestions.db.converters.IntTypeConverters;
 import com.madtitan94.suggestions.db.dao.HashTagDao;
 import com.madtitan94.suggestions.db.dao.TransactionDao;
@@ -19,7 +20,7 @@ import com.madtitan94.suggestions.pojoClasses.Transaction;
 
 @Database(entities = {HashTag.class, Transaction.class},
         version = 52, exportSchema = true)
-@TypeConverters({IntTypeConverters.class})
+@TypeConverters({IntTypeConverters.class, IntArrTypeConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract TransactionDao transactionDao();

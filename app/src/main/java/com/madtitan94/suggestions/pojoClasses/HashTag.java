@@ -1,12 +1,13 @@
 package com.madtitan94.suggestions.pojoClasses;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "hash_tags")
 public class HashTag {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String tagName;
@@ -59,6 +60,13 @@ public class HashTag {
 
     public HashTag(int id, String tagName, String detail, String createdAt, int status) {
         this.id = id;
+        this.tagName = tagName;
+        this.detail = detail;
+        this.createdAt = createdAt;
+        this.status = status;
+    }
+    @Ignore
+    public HashTag( String tagName, String detail, String createdAt, int status) {
         this.tagName = tagName;
         this.detail = detail;
         this.createdAt = createdAt;

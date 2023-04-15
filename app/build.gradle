@@ -53,6 +53,9 @@ dependencies {
     /*----Dimension ----*/
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
+   /// implementation 'com.github.jaychang0917:DynamicSpanRecyclerView:v1.1.1'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
     // optional - Test helpers
     //noinspection GradleDependency
     testImplementation "androidx.room:room-testing:$room_version"

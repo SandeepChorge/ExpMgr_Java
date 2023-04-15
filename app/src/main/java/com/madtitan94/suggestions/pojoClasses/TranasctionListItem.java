@@ -1,15 +1,8 @@
 package com.madtitan94.suggestions.pojoClasses;
 
-import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-import java.util.List;
-
-@Entity(tableName = "transactions")
-public class Transaction {
-
-    @PrimaryKey(autoGenerate = true)
+public class TranasctionListItem {
     private int id;
 
     private String detail;
@@ -80,16 +73,4 @@ public class Transaction {
         this.status = status;
     }
 
-    public Transaction(){
-    }
-
-    @Ignore
-    public Transaction(String detail, String createdAt, Double amount, int type, int status, int[] tags) {
-        this.detail = detail;
-        this.createdAt = createdAt;
-        this.amount = amount;
-        this.type = type;
-        this.status = status;
-        this.tags = tags;
-    }
 }

@@ -1,4 +1,4 @@
-package com.madtitan94.suggestions;
+package com.madtitan94.suggestions.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,10 +14,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.gson.Gson;
+import com.madtitan94.suggestions.R;
 import com.madtitan94.suggestions.databinding.TransactionBottomsheetBinding;
 import com.madtitan94.suggestions.db.AppDatabase;
 import com.madtitan94.suggestions.pojoClasses.HashTag;
@@ -42,8 +45,16 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
         db = AppDatabase.getDatabase(this);
-        getTestData();
-        showDialog();
+        //getTestData();
+
+        findViewById(R.id.fab_bottomSheet).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context,BottomSheetActivity.class));
+            }
+        });
+
+        // showDialog();
 
         // context = this;
       /*  resultAlert = new AlertDialog.Builder(context);
@@ -82,13 +93,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        try {
+        /*try {
             bottomSheetDialog = new BottomSheetDialog(context);
 
             bottomsheetBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.transaction_bottomsheet,
                     null, false);
             bottomSheetDialog.setContentView(bottomsheetBinding.getRoot());
-
+            bottomSheetDialog.getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE|
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             bottomsheetBinding.searchEd.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -115,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 
     private void getFilteredTags(String query){
@@ -143,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     private void generateChips(List<HashTag> tagList){
         try {
 
-            Log.e("generateChips",""+new Gson().toJson(tagList));
+        /*    Log.e("generateChips",""+new Gson().toJson(tagList));
             bottomsheetBinding.chipGroup.removeAllViews();
             if (tagList!=null && tagList.size()>0){
                 for (int index = 0; index < tagList.size(); index++) {
@@ -169,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomsheetBinding.chipGroup.addView(chip);
                 }
             }
-
+*/
         }catch (Exception ex){
             ex.printStackTrace();
         }
