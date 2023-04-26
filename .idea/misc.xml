@@ -9,7 +9,9 @@
         <entry key="..\:/Sandeep/Projects/Android/Suggestions/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
         <entry key="..\:/Sandeep/Projects/Android/Suggestions/app/src/main/res/drawable/submit_draw.xml" value="0.129" />
         <entry key="..\:/Sandeep/Projects/Android/Suggestions/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Sandeep/Projects/Android/Suggestions/app/src/main/res/layout/hashtag_item.xml" value="0.24166666666666667" />
         <entry key="..\:/Sandeep/Projects/Android/Suggestions/app/src/main/res/layout/transaction_bottomsheet.xml" value="0.24895833333333334" />
+        <entry key="..\:/Sandeep/Projects/Android/Suggestions/app/src/main/res/layout/transaction_item.xml" value="0.24895833333333334" />
       </map>
     </option>
   </component>

@@ -5,6 +5,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.madtitan94.suggestions.pojoClasses.HashTag;
+import com.madtitan94.suggestions.pojoClasses.TagToTransaction;
 import com.madtitan94.suggestions.pojoClasses.Transaction;
 
 import java.util.List;
@@ -14,9 +16,24 @@ public interface TransactionDao {
     @Query("SELECT * FROM `transactions` WHERE id =:transactionId")
     Transaction getTransaction(String transactionId);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert( Transaction transaction);
+  @Query("SELECT * FROM `transactions`")
+    Transaction getTransactions();
+
+/*  @Query("select * from hash_tags where id in (select tags from transactions where id = 1)")
+  List<HashTag> getTags();*/
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert( Transaction transaction);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Transaction>transactions );
+
+    @Query("delete from tag_to_transactions where transactionId =:transactionId")
+    void deleteTransactionMappings(long transactionId);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertMappings(List<TagToTransaction> mappings);
+
+    /*select group_concat(tagName,",") as mappedTags from hash_tags where id in (select tagId from tag_to_transactions where transactionId = 3)*/
+
 }

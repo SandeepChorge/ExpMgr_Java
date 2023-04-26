@@ -18,7 +18,7 @@ public interface HashTagDao {
     List<HashTag> getTagsByName(String search);
 
     @Query("SELECT * FROM `hash_tags` WHERE tagName LIKE '%' || :search || '%' AND id NOT IN (:mapped)")
-    List<HashTag> getTagsByNameExclude(String search,int[] mapped);
+    List<HashTag> getTagsByNameExclude(String search,long[] mapped);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insert(HashTag tag);

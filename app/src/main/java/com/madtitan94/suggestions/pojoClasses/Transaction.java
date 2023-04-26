@@ -10,7 +10,7 @@ import java.util.List;
 public class Transaction {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     private String detail;
 
@@ -22,21 +22,34 @@ public class Transaction {
 
     private int status;
 
-    private int[] tags;
+/*
 
-    public int[] getTags() {
+    private List<String> tagsNames;
+
+    public List<String> getTagsNames() {
+        return tagsNames;
+    }
+
+    public void setTagsNames(List<String> tagsNames) {
+        this.tagsNames = tagsNames;
+    }
+
+    private List<Integer> tags;
+
+    public List<Integer> getTags() {
         return tags;
     }
 
-    public void setTags(int[] tags) {
+    public void setTags(List<Integer> tags) {
         this.tags = tags;
     }
+*/
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -84,12 +97,12 @@ public class Transaction {
     }
 
     @Ignore
-    public Transaction(String detail, String createdAt, Double amount, int type, int status, int[] tags) {
+    public Transaction(String detail, String createdAt, Double amount, int type, int status/*, List<Integer> tags*/) {
         this.detail = detail;
         this.createdAt = createdAt;
         this.amount = amount;
         this.type = type;
         this.status = status;
-        this.tags = tags;
+        //this.tags = tags;
     }
 }

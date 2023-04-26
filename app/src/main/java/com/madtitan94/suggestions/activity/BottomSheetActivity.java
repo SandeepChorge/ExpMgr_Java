@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.util.StringUtil;
 
 import com.google.gson.Gson;
 import com.madtitan94.suggestions.R;
@@ -24,12 +26,14 @@ import com.madtitan94.suggestions.adapters.HashTagAdapter;
 import com.madtitan94.suggestions.databinding.TransactionBottomsheetBinding;
 import com.madtitan94.suggestions.db.AppDatabase;
 import com.madtitan94.suggestions.pojoClasses.HashTag;
+import com.madtitan94.suggestions.pojoClasses.TagToTransaction;
 import com.madtitan94.suggestions.pojoClasses.Transaction;
 import com.madtitan94.suggestions.utils.Helper;
 import com.madtitan94.suggestions.utils.OPERATION_TYPE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -136,6 +140,7 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
             });
 
             binding.save.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onClick(View view) {
                     if (binding.tranAmount.getText().toString().trim().isEmpty()
@@ -145,6 +150,12 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
                         return;
                     }
 
+                    //int[] a = mappedTagList.stream().mapToInt(it -> it.getId()).toArray();
+                  /*  List<Integer> a = mappedTagList.stream().map(it -> it.getId()).collect(Collectors.toList());
+                    List<String> b = mappedTagList.stream().map(it -> it.getTagName()).collect(Collectors.toList());
+
+                    Helper.appendLog("151 "+new Gson().toJson(TextUtils.join(",", a)));
+                    Helper.appendLog("151 "+new Gson().toJson(b));*/
                     insertNewTranasction();
                     //Helper.showToast(context,"Passed");
                 }
@@ -167,11 +178,24 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
                             Helper.getCurrentDate(),
                             Double.parseDouble(binding.tranAmount.getText().toString().trim()),
                             1,
-                            1,
-                            mappedTagList.stream().mapToInt(it-> it.getId()).toArray()
+                            1
+                            //TextUtils.join(",", Collections.singleton(mappedTagList.stream().mapToInt(it -> it.getId()).toArray()))
                     );
+                    /*mappedTagList.stream().map(it->it.getId()).collect(Collectors.toList())
+                    transaction.setTagsNames(mappedTagList.stream().map(it->it.getTagName()).collect(Collectors.toList()));
+*/
+                   long insertedId =  db.transactionDao().insert(transaction);
 
-                    db.transactionDao().insert(transaction);
+                   //use the delete mappings to delete existing tag mappings to the transaction
+                    //db.transactionDao().deleteTransactionMappings(insertedId);
+
+                    List<TagToTransaction> tagMappings = new ArrayList<>();
+                    for (HashTag tag: mappedTagList){
+                        tagMappings.add(new TagToTransaction(insertedId,tag.getId(),1,Helper.getCurrentDate()));
+                    }
+
+                    db.transactionDao().insertMappings(tagMappings);
+
                     /*HashTag tag = new HashTag(""+tagName.trim(),"",Helper.getCurrentDate(),1);
                     long id = db.hashTagDao().insert(tag);
                     Helper.appendLog("id generated is  "+id);
@@ -227,7 +251,7 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             protected Void doInBackground(Void... voids) {
-                int[] ints = mappedTagList.stream().mapToInt(it-> it.getId()).toArray();
+                long[] ints = mappedTagList.stream().mapToLong(it-> it.getId()).toArray();
                 Helper.appendLog("Will be searching for "+query);
                 //hashTags = db.hashTagDao().getTagsByName(query);
                 hashTags = db.hashTagDao().getTagsByNameExclude(query,ints);
@@ -255,7 +279,7 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
             binding.tagSuggestions.setAdapter(suggestionTagAdapter);
             suggestionTagAdapter.notifyDataSetChanged();
 
-            List<Integer> a = suggestionTagList.stream().map(it-> it.getId()).collect(Collectors.toList());
+            List<Long> a = suggestionTagList.stream().map(it-> it.getId()).collect(Collectors.toList());
             Helper.appendLog("suggest "+new Gson().toJson(a));
         }catch (Exception ex){
             ex.printStackTrace();

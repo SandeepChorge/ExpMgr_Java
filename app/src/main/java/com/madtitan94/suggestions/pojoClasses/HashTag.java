@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class HashTag {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     private String tagName;
 
@@ -18,11 +18,11 @@ public class HashTag {
 
     private int status;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,7 +58,7 @@ public class HashTag {
         this.status = status;
     }
 
-    public HashTag(int id, String tagName, String detail, String createdAt, int status) {
+    public HashTag(long id, String tagName, String detail, String createdAt, int status) {
         this.id = id;
         this.tagName = tagName;
         this.detail = detail;
