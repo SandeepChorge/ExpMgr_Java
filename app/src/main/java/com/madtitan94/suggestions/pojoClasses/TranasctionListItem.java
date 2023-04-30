@@ -15,13 +15,13 @@ public class TranasctionListItem {
 
     private int status;
 
-    private int[] tags;
+    private String tags;
 
-    public int[] getTags() {
+    public String getTags() {
         return tags;
     }
 
-    public void setTags(int[] tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 

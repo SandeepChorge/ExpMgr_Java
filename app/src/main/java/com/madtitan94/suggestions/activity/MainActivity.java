@@ -3,32 +3,32 @@ package com.madtitan94.suggestions.activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.chip.Chip;
 import com.google.gson.Gson;
 import com.madtitan94.suggestions.R;
+import com.madtitan94.suggestions.adapters.TransactionAdapter;
+import com.madtitan94.suggestions.databinding.ActivityMainBinding;
 import com.madtitan94.suggestions.databinding.TransactionBottomsheetBinding;
 import com.madtitan94.suggestions.db.AppDatabase;
 import com.madtitan94.suggestions.pojoClasses.HashTag;
+import com.madtitan94.suggestions.pojoClasses.TranasctionListItem;
+import com.madtitan94.suggestions.pojoClasses.Transaction;
+import com.madtitan94.suggestions.utils.Helper;
+import com.madtitan94.suggestions.utils.OPERATION_TYPE;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TransactionAdapter.TransactionClicked {
 
     Context context;
     AlertDialog.Builder resultAlert;
@@ -37,23 +37,26 @@ public class MainActivity extends AppCompatActivity {
     TransactionBottomsheetBinding bottomsheetBinding;
     AppDatabase db;
 
+    ActivityMainBinding binding;
+    List<TranasctionListItem> recentTransactions= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         context = this;
         initViews();
 
         db = AppDatabase.getDatabase(this);
         //getTestData();
 
-        findViewById(R.id.fab_bottomSheet).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context,BottomSheetActivity.class));
-            }
-        });
+        binding.fabBottomSheet.setOnClickListener(this);
 
+        binding.expToday.setOnClickListener(this);
+        binding.expWeek.setOnClickListener(this);
+        binding.expMonth.setOnClickListener(this);
+
+        setupRecentTransactions();
         // showDialog();
 
         // context = this;
@@ -67,6 +70,34 @@ public class MainActivity extends AppCompatActivity {
         });
 */
 
+    }
+
+    private void setupRecentTransactions() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                recentTransactions = db.transactionDao().getTransactions();
+                Helper.appendLog("79 recentTransactions "+new Gson().toJson(recentTransactions!=null?recentTransactions:" IS EMPTY"));
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void unused) {
+                super.onPostExecute(unused);
+                try {
+
+
+                    if (recentTransactions == null)
+                        recentTransactions = new ArrayList<>();
+                    TransactionAdapter adapter = new TransactionAdapter(context, recentTransactions, MainActivity.this);
+                    binding.recentTransactions.setAdapter(adapter);
+                    binding.recentTransactions.setLayoutManager(new LinearLayoutManager(context));
+                    adapter.notifyDataSetChanged();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        }.execute();
     }
 
     private void getTestData(){
@@ -194,4 +225,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.expToday:
+                Helper.appendLog("Todays date "+Helper.DT_getFilterDate(1));
+                break;
+
+            case R.id.expWeek:
+                Helper.appendLog("Week Start date "+Helper.DT_getFilterDate(2));
+                Helper.appendLog("Week End date "+Helper.DT_getFilterDate(3));
+                break;
+            case R.id.expMonth:
+                //Helper.appendLog("Todays date "+Helper.getFilterDate(1));
+                break;
+
+            case R.id.fab_bottomSheet:
+                startActivity(new Intent(context,BottomSheetActivity.class));
+                break;
+
+
+        }
+    }
+
+
+    @Override
+    public void OnTransactionClicked(OPERATION_TYPE operationType, int position, Transaction transaction) {
+
+    }
 }

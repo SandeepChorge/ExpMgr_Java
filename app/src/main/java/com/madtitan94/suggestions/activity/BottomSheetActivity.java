@@ -6,11 +6,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -18,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.util.StringUtil;
 
 import com.google.gson.Gson;
 import com.madtitan94.suggestions.R;
@@ -32,8 +28,6 @@ import com.madtitan94.suggestions.utils.Helper;
 import com.madtitan94.suggestions.utils.OPERATION_TYPE;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -175,7 +169,7 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
 
                     Transaction transaction = new Transaction(
                             binding.trandetail.getText().toString().trim(),
-                            Helper.getCurrentDate(),
+                            Helper.DT_getCurrentDate(),
                             Double.parseDouble(binding.tranAmount.getText().toString().trim()),
                             1,
                             1
@@ -191,7 +185,7 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
 
                     List<TagToTransaction> tagMappings = new ArrayList<>();
                     for (HashTag tag: mappedTagList){
-                        tagMappings.add(new TagToTransaction(insertedId,tag.getId(),1,Helper.getCurrentDate()));
+                        tagMappings.add(new TagToTransaction(insertedId,tag.getId(),1,Helper.DT_getCurrentDate()));
                     }
 
                     db.transactionDao().insertMappings(tagMappings);
@@ -225,7 +219,7 @@ public class BottomSheetActivity extends AppCompatActivity implements HashTagAda
         new AsyncTask<Void,Void,Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
-                HashTag tag = new HashTag(""+tagName.trim(),"",Helper.getCurrentDate(),1);
+                HashTag tag = new HashTag(""+tagName.trim(),"",Helper.DT_getCurrentDate(),1);
                 long id = db.hashTagDao().insert(tag);
                 Helper.appendLog("id generated is  "+id);
 
